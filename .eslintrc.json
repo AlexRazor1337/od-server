@@ -1,0 +1,42 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "plugins": ["prettier", "node", "security-node", "unicorn"],
+  "extends": ["eslint:recommended", "prettier", "plugin:node/recommended", "plugin:security-node/recommended"],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-unused-vars": [
+      "warn"
+    ],
+    "no-console": [
+      "warn"
+    ],
+    "eqeqeq": [
+      "error",
+      "always"
+    ],
+    "node/no-deprecated-api": [
+      "error"
+    ],
+    "node/file-extension-in-import": [
+      "error",
+      "always"
+    ],
+    "unicorn/prefer-logical-operator-over-ternary": [
+      "error"
+    ]
+  }
+}
