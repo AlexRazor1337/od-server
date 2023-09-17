@@ -26,7 +26,12 @@ io.on('connect', (socket) => {
     let player = {};
     socket.on('init', (data, callback) => {
         socket.join('game');
-        player = new Player(socket.id);
+        player = {
+            id: socket.id,
+            name: data.playerName,
+            x: Math.floor(Math.random() * 10) + 6,
+            y: Math.floor(Math.random() * 10) + 6,
+        };
         players.push(player);
 
         callback({
@@ -38,21 +43,21 @@ io.on('connect', (socket) => {
 
     socket.on('client-tick', (data) => {
         const speed = 6;
-        const xV = player.playerConfig.xVector = data.xVector;
-        const yV = player.playerConfig.yVector = data.yVector;
+        const xV = player.xVector = data.xVector;
+        const yV = player.yVector = data.yVector;
 
-        if ((player.playerData.x > 5 && xV < 0) || (player.playerData.x < settings.worldWidth) && (xV > 0)) {
-            player.playerData.x += speed * xV;
+        if ((player.x > 5 && xV < 0) || (player.x < settings.worldWidth) && (xV > 0)) {
+            player.x += speed * xV;
         }
-        if ((player.playerData.y > 5 && yV > 0) || (player.playerData.y < settings.worldHeight) && (yV < 0)) {
-            player.playerData.y -= speed * yV;
+        if ((player.y > 5 && yV > 0) || (player.y < settings.worldHeight) && (yV < 0)) {
+            player.y -= speed * yV;
         }
 
-        const capturedPlayerData = checkForPlayerCollisions(player.playerData, player.playerConfig, players, playersForUsers, socket.id);
-        if (capturedPlayerData) {
-            io.to('game').emit('player-absorb', capturedPlayerData);
-            io.to('game').emit('update-leaderboard', getLeaderboard());
-        }
+        // const capturedPlayerData = checkForPlayerCollisions(player.playerData, player.playerConfig, players, playersForUsers, socket.id);
+        // if (capturedPlayerData) {
+        //     io.to('game').emit('player-absorb', capturedPlayerData);
+        //     io.to('game').emit('update-leaderboard', getLeaderboard());
+        // }
     });
 
     socket.on('disconnect', (data) => {
