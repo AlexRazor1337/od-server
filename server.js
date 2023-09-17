@@ -45,6 +45,12 @@ if (process.env.NODE_ENV === 'development') {
 
     const adminApp = express();
     adminApp.use(express.static('./node_modules/@socket.io/admin-ui/ui/dist'));
+    // cors
+    adminApp.use((req, res, next) => {
+        res.setHeader("Access-Control-Allow-Origin", `*`);
+        res.setHeader("Access-Control-Allow-Headers", "Content-type,Authorization");
+        next();
+    });
     adminApp.listen(process.env.ADMIN_PORT, () => {
         console.log(`Admin UI is running on http://localhost:${process.env.ADMIN_PORT}`);
     });
