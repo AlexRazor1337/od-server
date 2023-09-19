@@ -1,6 +1,4 @@
-# node-template
-
-Heavily opiniated template for `Node.js` projects. It has only some basic things setup, so it's suitable for anything.
+# Simple WS server for browser game
 
 Main elements are:
 - **pnpm** - efficient packet manager
@@ -14,6 +12,4 @@ Main elements are:
 
 1. `npm i`
 2. `npm run prepare`
-
-## Optional packages
-- [Module Alias](https://www.npmjs.com/package/module-alias) - easier imports
+3. `npm run dev`
