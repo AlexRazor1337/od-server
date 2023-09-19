@@ -11,8 +11,8 @@ Main elements are:
 ## Development
 
 0. Clone the repo: `git clone --recursive git@github.com:AlexRazor1337/od-server.git`
-1. `npm i`
-2. `npm run prepare`
+1. Install deps: `npm i`
+2. Install husky: `npm run prepare`
 3. Fill the `.enf` file:
     ```env
     NODE_ENV=development
@@ -21,4 +21,5 @@ Main elements are:
     PORT=3000
     CORS_ORIGIN=localhost:3000
     ```
-4. `npm run dev`
+4. Run server in development mode: `npm run dev`
+5; Now you can open the game in the browser via `localhost:3000`
