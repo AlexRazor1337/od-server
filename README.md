@@ -13,4 +13,12 @@ Main elements are:
 0. Clone the repo: `git clone --recursive git@github.com:AlexRazor1337/od-server.git`
 1. `npm i`
 2. `npm run prepare`
-3. `npm run dev`
+3. Fill the `.enf` file:
+    ```env
+    NODE_ENV=development
+    ADMIN_PORT=8001
+    ADMIN_PASSWORD=testtest
+    PORT=3000
+    CORS_ORIGIN=localhost:3000
+    ```
+4. `npm run dev`
