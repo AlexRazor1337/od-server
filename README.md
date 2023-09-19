@@ -10,6 +10,7 @@ Main elements are:
 
 ## Development
 
+0. Clone the repo: `git clone --recursive git@github.com:AlexRazor1337/od-server.git`
 1. `npm i`
 2. `npm run prepare`
 3. `npm run dev`
