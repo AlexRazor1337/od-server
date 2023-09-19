@@ -20,8 +20,8 @@ io.on('connect', (socket) => {
         player = {
             id: socket.id,
             name: data.playerName,
-            worldX: Math.floor(Math.random() * 10) + 6,
-            worldY: Math.floor(Math.random() * 10) + 6,
+            worldX: (Math.floor(Math.random() * 10) + 6) * 48,
+            worldY: (Math.floor(Math.random() * 10) + 6) * 48,
         };
         players[data.playerName] = player;
 
