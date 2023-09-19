@@ -11,7 +11,7 @@ setInterval(() => {
     if (Object.keys(players).length > 0) {
         io.to('game').emit('tick', players);
     }
-}, Math.floor(1000 / 30));
+}, 3);
 
 io.on('connect', (socket) => {
     let player = {};
@@ -20,8 +20,8 @@ io.on('connect', (socket) => {
         player = {
             id: socket.id,
             name: data.playerName,
-            worldX: (Math.floor(Math.random() * 10) + 6) * 48,
-            worldY: (Math.floor(Math.random() * 10) + 6) * 48,
+            worldX: 6 * 48,
+            worldY: 6 * 48,
         };
         players[data.playerName] = player;
 
@@ -37,6 +37,8 @@ io.on('connect', (socket) => {
         players[player.name].worldX = data.worldX;
         players[player.name].worldY = data.worldY;
         players[player.name].direction = data.direction;
+        players[player.name].frameX = data.frameX;
+        players[player.name].currentState = data.currentState;
 
         // const capturedPlayerData = checkForPlayerCollisions(player.playerData, player.playerConfig, players, playersForUsers, socket.id);
         // if (capturedPlayerData) {
