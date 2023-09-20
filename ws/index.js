@@ -20,8 +20,8 @@ io.on('connect', (socket) => {
         player = {
             id: socket.id,
             name: data.playerName,
-            worldX: 6 * 48,
-            worldY: 6 * 48,
+            worldX: 4 * 48,
+            worldY: 4 * 48,
         };
         players[data.playerName] = player;
 
