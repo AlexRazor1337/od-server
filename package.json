@@ -1,5 +1,8 @@
 {
   "name": "template",
+  "engines": {
+    "node": ">=18"
+  },
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +12,7 @@
     "dev": "nodemon index.js",
     "format": "prettier --write \"**/*.js\"",
     "lint:fix": "eslint \"**/*.js\" --fix",
-    "prepare": "husky install"
+    "add-husky": "husky install"
   },
   "keywords": [],
   "author": "",
