@@ -11,7 +11,7 @@ setInterval(() => {
   if (Object.keys(players).length > 0) {
     io.to('game').emit('tick', players);
   }
-}, 1000 /30);
+}, 1000 / 30);
 
 io.on('connect', (socket) => {
   let player = {};
