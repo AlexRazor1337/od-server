@@ -11,7 +11,7 @@ setInterval(() => {
   if (Object.keys(players).length > 0) {
     io.to('game').emit('tick', players);
   }
-}, 1000 / 30);
+}, 1000 / 40);
 
 io.on('connect', (socket) => {
   let player = {};
@@ -20,8 +20,8 @@ io.on('connect', (socket) => {
     player = {
       id: socket.id,
       name: data.playerName,
-      worldX: 15 * 48,
-      worldY: 15 * 48,
+      worldX: 16 * 48,
+      worldY: 16 * 48,
     };
     players[data.playerName] = player;
 
