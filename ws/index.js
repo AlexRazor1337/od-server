@@ -1,5 +1,8 @@
 import { io } from '../server.js';
 
+let entities = [
+
+];
 const players = {};
 let world = {};
 
@@ -39,8 +42,8 @@ io.on('connect', (socket) => {
     players[player.name].worldX = data.worldX;
     players[player.name].worldY = data.worldY;
     players[player.name].direction = data.direction;
-    players[player.name].frameX = data.frameX;
     players[player.name].currentState = data.currentState;
+    players[player.name].speed = data.speed;
 
     // const capturedPlayerData = checkForPlayerCollisions(player.playerData, player.playerConfig, players, playersForUsers, socket.id);
     // if (capturedPlayerData) {
