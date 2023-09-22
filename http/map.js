@@ -7307,7 +7307,8 @@ export const Map = [
     "indexY": 13,
     "layers": [
       "full_grass_2"
-    ]
+    ],
+    "spawners": ["Slime"]
   },
   {
     "indexX": 16,

@@ -6,6 +6,8 @@ let entities = [
 const players = {};
 let world = {};
 
+let spawners = [];
+
 const initGame = () => {
   world = {};
 };
