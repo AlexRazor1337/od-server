@@ -1,6 +1,6 @@
-import Slime from "./Slime";
+import Slime from "./Slime.js";
 
-export default classMapping = {
+export const classMapping = {
     'Blue Slime': Slime,
     'Green Slime': Slime,
     'Slime': Slime,
