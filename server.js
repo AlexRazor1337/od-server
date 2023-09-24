@@ -21,7 +21,7 @@ app.use(helmet());
 const expressServer = app.listen(process.env.PORT || 3000, () => {
   if (process.env.NODE_ENV === 'development') {
     console.log(
-      `Server is running on http://localhost:${process.env.PORT || 3000}`
+      `Server is running on http://localhost:${process.env.PORT || 3000}/?dev`
     );
   }
 });
