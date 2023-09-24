@@ -1,4 +1,5 @@
 import { classMapping } from "./Mobs/classMapping.js";
+import { TILE_SIZE } from "./Tile.js";
 
 export default class Spawner {
     /**
@@ -8,15 +9,16 @@ export default class Spawner {
      * @param {String} mob
      * @param {Number} frequency 
      */
-    constructor(game, indexX, indexY, mob, frequency = 3) {
+    constructor(game, indexX, indexY, mob, frequency = 10000) {
         this.game = game;
         this.indexX = indexX;
         this.indexY = indexY;
         this.mob = mob;
         this.mobs = {};
-        this.maxMobs = 3;
+        this.maxMobs = 1;
         this.frequency = frequency;
         this.timer = 0;
+        this.range = 2 * TILE_SIZE;
 
         this.interval = null;
     }
@@ -33,9 +35,25 @@ export default class Spawner {
         } else {
             this.timer += deltaTime;
         }
+
+        this.updateMobs(deltaTime);
+    }
+
+    updateMobs(deltaTime) {
+        for (const name in this.mobs) {
+            this.mobs[name].update(deltaTime);
+        }
     }
 
     stop() {
         this.interval.clearInterval();
+    }
+
+    getCenterX() {
+        return (this.indexX * TILE_SIZE) + TILE_SIZE / 2;
+    }
+
+    getCenterY() {
+        return (this.indexY * TILE_SIZE) + TILE_SIZE / 2;
     }
 }
