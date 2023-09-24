@@ -8247,14 +8247,16 @@ export const Map = [
     "indexY": 17,
     "layers": [
       "full_grass_2",
-      "Зелене листя"
+      "Зелене листя",
+      "glowing_pumpkin_jack",
     ]
   },
   {
     "indexX": 18,
     "indexY": 18,
     "layers": [
-      "full_grass_2"
+      "full_grass_2",
+      "glowing_pumpkin_jack"
     ]
   },
   {
@@ -8686,8 +8688,7 @@ export const Map = [
     "indexY": 16,
     "layers": [
       "full_grass_2",
-      "Жовтувате листя",
-      "sunflower_left"
+      "glowing_pumpkin_jack"
     ]
   },
   {
@@ -8695,14 +8696,14 @@ export const Map = [
     "indexY": 17,
     "layers": [
       "full_grass_2",
-      "Зелене листя"
     ]
   },
   {
     "indexX": 19,
     "indexY": 18,
     "layers": [
-      "full_grass_2"
+      "full_grass_2",
+      "glowing_pumpkin_jack",
     ]
   },
   {
@@ -9138,29 +9139,31 @@ export const Map = [
     "indexX": 20,
     "indexY": 16,
     "layers": [
-      "full_grass_2"
+      "full_grass_2",
+      "glowing_pumpkin_jack",
     ]
   },
   {
     "indexX": 20,
     "indexY": 17,
     "layers": [
-      "full_grass_2"
+      "full_grass_2",
+      "glowing_pumpkin_jack"
     ]
   },
   {
     "indexX": 20,
     "indexY": 18,
     "layers": [
-      "full_grass_2"
+      "full_grass_2",
+      "glowing_pumpkin_jack"
     ]
   },
   {
     "indexX": 20,
     "indexY": 19,
     "layers": [
-      "full_grass_2",
-      "pumpkin_with_grass"
+      "full_grass_2"
     ]
   },
   {

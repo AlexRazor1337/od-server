@@ -1,8 +1,17 @@
 import Mob from "./Mob.js";
 
 export default class Slime extends Mob {
-    constructor(spawner) {
-        super(spawner);
+    constructor(spawner, config = {}) {
+        super(spawner, config);
+
+        const spawnerCenterX = spawner.getCenterX();
+        const spawnerCenterY = spawner.getCenterY();
+
+        this.height = 22;
+        this.width = 36;
+
+        this.worldX = spawnerCenterX - this.width / 2;
+        this.worldY = spawnerCenterY - this.height / 2;
 
         this.name = 'Slime_' + makeid(10);
         this.lvl = Math.floor(Math.random() * (6 - 1 + 1)) + 1;

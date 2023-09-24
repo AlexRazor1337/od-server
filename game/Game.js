@@ -1,25 +1,24 @@
-import Slime from "./Mobs/Slime.js";
 import Spawner from "./Spawner.js";
+import { Map } from "../http/map.js";
+import World from "./World.js";
 
 const deltaTime = 10;
 
 export default class Game {
     constructor() {
-        this.world;
+        this.world = new World(this, Map);
         this.players = {};
         this.mobs = {};
-        this.spawners = [new Spawner(this, 17, 17, 'Slime', 5000)];
+        this.spawners = [new Spawner(this, 19, 17, 'Slime', 5000)];
 
         this.interval = null;
     }
 
     start() {
-        console.log(this.mobs);
-
         if (!this.interval) {
             this.interval = setInterval(() => {
+            //console.log('Mobs counter: ' + Object.keys(this.mobs).length);
                 this.updateSpawners(deltaTime);
-                this.updateMobs(deltaTime);
             }, deltaTime);
         }
     }
@@ -27,15 +26,6 @@ export default class Game {
     updateSpawners(deltaTime) {
         for (let i = 0; i < this.spawners.length; i++) {
             this.spawners[i].update(deltaTime);
-        }
-    }
-
-    updateMobs(deltaTime) {
-        for (const name in this.mobs) {
-            if (this.players.hasOwnProperty(name)) {
-                const value = this.mobs[name];
-                value.update(deltaTime);
-            }
         }
     }
 
