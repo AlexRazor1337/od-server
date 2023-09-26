@@ -9,7 +9,12 @@ export default class Game {
         this.world = new World(this, Map);
         this.players = {};
         this.mobs = {};
-        this.spawners = [new Spawner(this, 19, 17, 'Slime', 5000)];
+        this.spawners = [
+            new Spawner(this, 19, 17, 'Slime', 5000),
+            new Spawner(this, 16, 14, 'Slime', 5000),
+            new Spawner(this, 14, 19, 'Slime', 5000),
+            new Spawner(this, 12, 12, 'Slime', 5000)
+        ];
 
         this.interval = null;
     }

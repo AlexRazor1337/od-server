@@ -15,7 +15,7 @@ export default class Spawner {
         this.indexY = indexY;
         this.mob = mob;
         this.mobs = {};
-        this.maxMobs = 1;
+        this.maxMobs = 3;
         this.frequency = frequency;
         this.timer = 0;
         this.range = 2 * TILE_SIZE;
