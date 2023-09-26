@@ -18,4 +18,23 @@ export default class World {
 
         this.referenceTile = this.tiles[0][0];
     }
+
+        /**
+     * Safe way to get tile
+     * 
+     * @param {Number} indexX 
+     * @param {Number} indexY 
+     */
+        getTile(indexX, indexY) {
+            if (
+                indexX < 0 || 
+                indexY < 0 ||
+                indexX >= this.worldXSize ||
+                indexY >= this.worldYSize
+            ) {
+                return null;
+            }
+    
+            return this.tiles[indexX][indexY];
+        }
 }

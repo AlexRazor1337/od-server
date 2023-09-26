@@ -1,12 +1,18 @@
 import { io } from '../server.js';
 import Game from '../game/Game.js';
+import Skill from '../game/Skill.js';
 
 const game = new Game();
 
 setInterval(() => {
-  if (Object.keys(game.players).length > 0 || Object.keys(game.mobs).length > 0) {
+  if (Object.keys(game.players).length > 0) {
+    let mobs = {};
+    for (let i = 0; i < game.spawners.length; i++) {
+      mobs = {...mobs, ...game.spawners[i].mobs};
+    }
+
     io.to('game').emit('tick', {
-      mobs: game.mobs,
+      mobs: mobs,
       players: game.players,
     });
   }
@@ -24,11 +30,16 @@ io.on('connect', (socket) => {
       worldY: 16 * 48,
     };
     game.players[data.playerName] = player;
+    
+    let mobs = {};
+    for (let i = 0; i < game.spawners.length; i++) {
+      mobs = {...game.spawners[i].mobs};
+    }
 
     callback({
       player,
       players: game.players,
-      mobs: game.mobs,
+      mobs: mobs,
     });
   });
 
@@ -47,6 +58,21 @@ io.on('connect', (socket) => {
     //     io.to('game').emit('player-absorb', capturedPlayerData);
     //     io.to('game').emit('update-leaderboard', getLeaderboard());
     // }
+  });
+
+  socket.on('client-player-casts-skill', (data) => {
+    let mob = game.mobs[data.enemy];
+    let skill = new Skill(player, data.skill);
+
+    if (mob) {
+      mob.hp -= skill.damage;
+      mob.spawner.mobs[mob.name] = mob.serialize();
+
+      if (mob.hp <= 0) {
+        delete mob.spawner.mobs[data.enemy];
+        delete game.mobs[data.enemy];
+      }
+    }
   });
 
   socket.on('disconnect', (data) => {

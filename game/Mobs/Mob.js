@@ -12,9 +12,10 @@ export default class Mob {
         this.height;
         this.width;
 
-        this.hp = 10;
+        this.maxHp = 100;
+        this.hp = this.maxHp;
         this.defence;
-        this.lvl;
+        this.lvl = 0;
         this.name;
         this.maxXSpeed = 1;
         this.maxYSpeed = 1;
@@ -30,10 +31,12 @@ export default class Mob {
     }
 
     update(deltaTime) {
+        console.log('moving');
         this.randomMoving(deltaTime);
+        this.handleMapBorders();
         this.handleObstacle();
         this.move();
-        this.spawner.game.mobs[this.name] = this.serialize(this);
+        this.spawner.mobs[this.name] = this.serialize(this);
     }
 
     move() {
@@ -75,6 +78,7 @@ export default class Mob {
             direction: this.direction,
             hp: this.hp,
             lvl: this.lvl,
+            maxHp: this.maxHp,
         };
     }
 
@@ -142,6 +146,177 @@ export default class Mob {
      * Hard to understand shit
      */
     handleObstacle() {
-       
+        let worldY = this.worldY;
+        let worldX = this.worldX;
+
+        if (this.xSpeed > 0) {
+            worldX += 1;
+            /*
+                Find indexes of upper and lower right tiles 
+             */
+            const minIndexYOffset = worldY % TILE_SIZE;
+            const maxIndexYOffset = (worldY + this.height - 1) % TILE_SIZE;
+            const minIndexY = (worldY - minIndexYOffset) / TILE_SIZE;
+            const maxIndexY = (worldY + this.height - 1 - maxIndexYOffset) / TILE_SIZE;
+
+            /*
+                Get right point of sprite
+            */
+            const xOffset = (worldX + this.width - 1) % TILE_SIZE;
+            const rightIndexX = ((worldX + this.width - 1) - xOffset) / TILE_SIZE;
+
+            /*
+                Find every tile on the right side.
+                For player with height 48 it can be 1 or 2 tiles.
+                Min and max index can be the same.
+            */
+            let tiles = [];
+            for (let i = minIndexY; i <= maxIndexY; i++) {
+                let tile = this.spawner.game.world.getTile(rightIndexX, i);
+                if (tile) {
+                    tiles.push(tile);
+                }
+            }
+
+            /*
+                If at least 1 tile is not passable set xSpeed as 0
+            */
+            tiles.forEach(tile => {
+                if (!tile.isPassable) {
+                    this.xSpeed = 0;
+                }
+            });
+        } else if (this.xSpeed < 0) {
+            worldX -= 1;
+            /*
+                Find indexes of upper and lower right tiles 
+             */
+            const minIndexYOffset = worldY % TILE_SIZE;
+            const maxIndexYOffset = (worldY + this.height - 1) % TILE_SIZE;
+            const minIndexY = (worldY - minIndexYOffset) / TILE_SIZE;
+            const maxIndexY = (worldY + this.height - 1 - maxIndexYOffset) / TILE_SIZE;
+
+            /*
+                Get right point of sprite
+            */
+            const xOffset = worldX % TILE_SIZE;
+            const leftIndexX = (worldX - xOffset) / TILE_SIZE;
+
+            /*
+                Find every tile on the right side.
+                For player with height 48 it can be 1 or 2 tiles.
+                Min and max index can be the same.
+            */
+            let tiles = [];
+            for (let i = minIndexY; i <= maxIndexY; i++) {
+                let tile = this.spawner.game.world.getTile(leftIndexX, i);
+
+                if (tile) {
+                    tiles.push(tile);
+                }
+            }
+
+            /*
+                If at least 1 tile is not passable set xSpeed as 0
+            */
+            tiles.forEach(tile => {
+                if (!tile.isPassable) {
+                    this.xSpeed = 0;
+                }
+            });
+        }
+
+        if (this.ySpeed > 0) {
+            worldY += 1;
+            /*
+                Find indexes of lower left and right tiles 
+             */
+            const minIndexXOffset = worldX % TILE_SIZE;
+            const maxIndexXOffset = (worldX + this.width - 1) % TILE_SIZE;
+            const minIndexX = (worldX - minIndexXOffset) / TILE_SIZE;
+            const maxIndexX = (worldX + this.width - 1 - maxIndexXOffset) / TILE_SIZE;
+
+            /*
+                Get right point of sprite
+            */
+            const yOffset = (worldY + this.height - 1) % TILE_SIZE;
+            const indexY = ((worldY + this.height - 1) - yOffset) / TILE_SIZE;
+
+            /*
+                Find every tile on the right side.
+                For player with height 48 it can be 1 or 2 tiles.
+                Min and max index can be the same.
+            */
+            let tiles = [];
+            for (let i = minIndexX; i <= maxIndexX; i++) {
+                let tile = this.spawner.game.world.getTile(i, indexY);
+                if (tile) {
+                    tiles.push(tile);
+                }
+            }
+
+            /*
+                If at least 1 tile is not passable set xSpeed as 0
+            */
+            tiles.forEach(tile => {
+                if (!tile.isPassable) {
+                    this.ySpeed = 0;
+                }
+            });
+        } else if (this.ySpeed < 0) {
+            worldY -= 1;
+            /*
+                Find indexes of lower left and right tiles 
+             */
+            const minIndexXOffset = worldX % TILE_SIZE;
+            const maxIndexXOffset = (worldX + this.width - 1) % TILE_SIZE;
+            const minIndexX = (worldX - minIndexXOffset) / TILE_SIZE;
+            const maxIndexX = (worldX + this.width - 1 - maxIndexXOffset) / TILE_SIZE;
+
+            /*
+                Get right point of sprite
+            */
+            const yOffset = worldY % TILE_SIZE;
+            const indexY = (worldY - yOffset) / TILE_SIZE;
+
+            /*
+                Find every tile on the right side.
+                For player with height 48 it can be 1 or 2 tiles.
+                Min and max index can be the same.
+            */
+            let tiles = [];
+            for (let i = minIndexX; i <= maxIndexX; i++) {
+                let tile = this.spawner.game.world.getTile(i, indexY);
+                
+                if (tile) {
+                    tiles.push(tile);
+                }
+            }
+
+            /*
+                If at least 1 tile is not passable set xSpeed as 0
+            */
+            tiles.forEach(tile => {
+                if (!tile.isPassable) {
+                    this.ySpeed = 0;
+                }
+            });
+        }
+    }
+
+    handleMapBorders() {
+        if (this.wordlX <= 0) {
+            this.wordlX = 0;
+        }
+        if (this.wordlX >= this.spawner.game.world.worldXSize * 48 - this.width) {
+            this.wordlX = this.game.width - this.width;
+        }
+
+        if (this.wordlY <= 0) {
+            this.wordlY = 0;
+        }
+        if (this.wordlY >= this.spawner.game.world.worldYSize * 48 - this.height) {
+            this.wordlY = this.game.height - this.height;
+        }
     }
 };

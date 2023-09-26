@@ -28,20 +28,12 @@ export default class Spawner {
             const className = classMapping[this.mob];
             const mob = new className(this);
 
-            this.mobs[mob.name] = mob;
-            this.game.mobs[mob.name] = mob.serialize();
+            this.mobs[mob.name] = mob.serialize();
+            this.game.mobs[mob.name] = mob;
             
             this.timer = 0;
         } else {
             this.timer += deltaTime;
-        }
-
-        this.updateMobs(deltaTime);
-    }
-
-    updateMobs(deltaTime) {
-        for (const name in this.mobs) {
-            this.mobs[name].update(deltaTime);
         }
     }
 
