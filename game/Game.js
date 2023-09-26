@@ -11,9 +11,9 @@ export default class Game {
         this.mobs = {};
         this.spawners = [
             new Spawner(this, 19, 17, 'Slime', 2000),
-            //new Spawner(this, 16, 14, 'Slime', 5000),
-            //new Spawner(this, 14, 19, 'Slime', 5000),
-            //new Spawner(this, 12, 12, 'Slime', 5000)
+            new Spawner(this, 16, 14, 'Slime', 3000),
+            new Spawner(this, 14, 19, 'Slime', 3000),
+            new Spawner(this, 12, 12, 'Slime', 3000)
         ];
 
         this.interval = null;
