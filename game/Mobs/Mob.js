@@ -12,9 +12,10 @@ export default class Mob {
         this.height;
         this.width;
 
-        this.hp = 10;
+        this.maxHp = 100;
+        this.hp = this.maxHp;
         this.defence;
-        this.lvl;
+        this.lvl = 0;
         this.name;
         this.maxXSpeed = 1;
         this.maxYSpeed = 1;
@@ -30,11 +31,12 @@ export default class Mob {
     }
 
     update(deltaTime) {
+        console.log('moving');
         this.randomMoving(deltaTime);
         this.handleMapBorders();
         this.handleObstacle();
         this.move();
-        this.spawner.game.mobs[this.name] = this.serialize(this);
+        this.spawner.mobs[this.name] = this.serialize(this);
     }
 
     move() {
@@ -76,6 +78,7 @@ export default class Mob {
             direction: this.direction,
             hp: this.hp,
             lvl: this.lvl,
+            maxHp: this.maxHp,
         };
     }
 
