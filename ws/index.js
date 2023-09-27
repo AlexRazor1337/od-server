@@ -1,6 +1,7 @@
 import { io } from '../server.js';
 import Game from '../game/Game.js';
-import Skill from '../game/Skill.js';
+import Player from '../game/Player.js';
+import { CLIENT_CAST_SKILL, CLIENT_TICK, DISCONNECT, INIT, SERVER_TICK, CONNECT } from '../public/emits.js';
 
 const game = new Game();
 
@@ -11,58 +12,46 @@ setInterval(() => {
       mobs = {...mobs, ...game.spawners[i].mobs};
     }
 
-    io.to('game').emit('tick', {
+    io.to('game').emit(SERVER_TICK, {
       mobs: mobs,
       players: game.players,
     });
   }
 }, 1000 / 40);
 
-io.on('connect', (socket) => {
-  let player = {};
+io.on(CONNECT, (socket) => {
+  let player = new Player(game);
 
-  socket.on('init', (data, callback) => {
+  socket.on(INIT, (data, callback) => {
     socket.join('game');
-    player = {
-      id: socket.id,
-      name: data.playerName,
-      worldX: 16 * 48,
-      worldY: 16 * 48,
-    };
-    game.players[data.playerName] = player;
+
+    player.id = socket.id;
+    player.name = data.playerName;
+
+    game.players[data.playerName] = player.serialize();
     
     let mobs = {};
     for (let i = 0; i < game.spawners.length; i++) {
-      mobs = {...game.spawners[i].mobs};
+      mobs = {...mobs, ...game.spawners[i].mobs};
     }
 
     callback({
-      player,
+      player: player.serialize(),
       players: game.players,
       mobs: mobs,
     });
   });
 
-  socket.on('client-tick', (data) => {
+  socket.on(CLIENT_TICK, (data) => {
     if (process.env.NODE_ENV === 'development') {
-      //console.log('client-tick', data);
+      //console.log(CLIENT_TICK, data);
     }
-    game.players[player.name].worldX = data.worldX;
-    game.players[player.name].worldY = data.worldY;
-    game.players[player.name].direction = data.direction;
-    game.players[player.name].currentState = data.currentState;
-    game.players[player.name].speed = data.speed;
-
-    // const capturedPlayerData = checkForPlayerCollisions(player.playerData, player.playerConfig, players, playersForUsers, socket.id);
-    // if (capturedPlayerData) {
-    //     io.to('game').emit('player-absorb', capturedPlayerData);
-    //     io.to('game').emit('update-leaderboard', getLeaderboard());
-    // }
+    game.players[player.name] = player.unserialize(data).serialize();
   });
 
-  socket.on('client-player-casts-skill', (data) => {
+  socket.on(CLIENT_CAST_SKILL, (data) => {
     let mob = game.mobs[data.enemy];
-    let skill = new Skill(player, data.skill);
+    const skill = player.skills[data.skill];
 
     if (mob) {
       mob.hp -= skill.damage;
@@ -75,7 +64,7 @@ io.on('connect', (socket) => {
     }
   });
 
-  socket.on('disconnect', (data) => {
+  socket.on(DISCONNECT, (data) => {
     delete game.players[player.name];
   });
 });

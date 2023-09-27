@@ -13,5 +13,7 @@ export default class Skill {
         this.cooldown = config.cooldown;
         this.castTime = config.cast_time;
         this.isCastingNow = false;
+
+        this.timer = 0;
     }
 }

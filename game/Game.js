@@ -10,10 +10,10 @@ export default class Game {
         this.players = {};
         this.mobs = {};
         this.spawners = [
-            new Spawner(this, 19, 17, 'Slime', 2000),
-            new Spawner(this, 16, 14, 'Slime', 3000),
-            new Spawner(this, 14, 19, 'Slime', 3000),
-            new Spawner(this, 12, 12, 'Slime', 3000)
+            new Spawner(this, 19, 17, 'Slime', 1000),
+            new Spawner(this, 16, 14, 'Slime', 1000),
+            new Spawner(this, 14, 19, 'Slime', 1000),
+            new Spawner(this, 12, 12, 'Slime', 1000)
         ];
 
         this.interval = null;
@@ -22,7 +22,7 @@ export default class Game {
     start() {
         if (!this.interval) {
             this.interval = setInterval(() => {
-            //console.log('Mobs counter: ' + Object.keys(this.mobs).length);
+                //console.log('Mobs counter: ' + Object.keys(this.mobs).length);
                 this.updateSpawners(deltaTime);
                 this.updateMobs(deltaTime);
             }, deltaTime);

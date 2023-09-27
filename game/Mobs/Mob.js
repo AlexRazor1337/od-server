@@ -31,7 +31,6 @@ export default class Mob {
     }
 
     update(deltaTime) {
-        console.log('moving');
         this.randomMoving(deltaTime);
         this.handleMapBorders();
         this.handleObstacle();
