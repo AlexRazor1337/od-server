@@ -17,7 +17,7 @@ setInterval(() => {
       players: game.players,
     });
   }
-}, 1000 / 40);
+}, 100 / 40);
 
 io.on(CONNECT, (socket) => {
   let player = new Player(game);
@@ -50,18 +50,7 @@ io.on(CONNECT, (socket) => {
   });
 
   socket.on(CLIENT_CAST_SKILL, (data) => {
-    let mob = game.mobs[data.enemy];
-    const skill = player.skills[data.skill];
-
-    if (mob) {
-      mob.hp -= skill.damage;
-      mob.spawner.mobs[mob.name] = mob.serialize();
-
-      if (mob.hp <= 0) {
-        delete mob.spawner.mobs[data.enemy];
-        delete game.mobs[data.enemy];
-      }
-    }
+    player.attackMob(data.enemy, data.skill);
   });
 
   socket.on(DISCONNECT, (data) => {

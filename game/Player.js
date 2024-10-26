@@ -18,7 +18,29 @@ export default class Player {
         this.skills = {
             'Base attack': new Skill(this, 'Base attack'),
             'Fireball': new Skill(this, 'Fireball'),
-        }
+        };
+    }
+
+    /**
+     * @param {String} mobName id 
+     * @param {String} skillName id
+     */
+    attackMob(mobName, skillName) {
+        /**
+         * @var {Mob} mob
+         */
+        let mob = this.game.mobs[mobName];
+        const skill = this.skills[skillName];
+
+        if (mob) {
+            mob.hp -= skill.damage;
+            mob.spawner.mobs[mob.name] = mob.serialize();
+      
+            if (mob.hp <= 0) {
+              delete mob.spawner.mobs[mobName];
+              delete this.game.mobs[mobName];
+            }
+          }
     }
 
     serialize() {
@@ -30,7 +52,7 @@ export default class Player {
             speed: this.speed,
             currentState: this.currentState,
             hp: this.stats.hp,
-        }
+        };
     }
 
     unserialize(data) {
