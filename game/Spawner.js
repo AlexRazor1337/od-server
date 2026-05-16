@@ -23,6 +23,9 @@ export default class Spawner {
         this.interval = null;
     }
 
+    /**
+     * @param {int} deltaTime 
+     */
     update(deltaTime) {
         if (this.timer >= this.frequency && Object.keys(this.mobs).length < this.maxMobs) {
             const className = classMapping[this.mob];

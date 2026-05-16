@@ -13,7 +13,7 @@ export default class Game {
             new Spawner(this, 19, 17, 'Slime', 1000),
             new Spawner(this, 16, 14, 'Slime', 1000),
             new Spawner(this, 14, 19, 'Slime', 1000),
-            new Spawner(this, 12, 12, 'Slime', 1000)
+            new Spawner(this, 12, 12, 'Slime', 1000),
         ];
 
         this.interval = null;
